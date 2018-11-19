@@ -64,4 +64,23 @@ def dow_births(some_list):
 cdc_day_births = dow_births(final_list)
 cdc_day_births
     
+def calc_counts(data, column):
     
+    d = {}
+    
+    for each_item in data:
+        attribute = each_item[column]
+        births = each_item[-1] # Grab births value
+    
+        if attribute in d:
+            d[attribute] += births
+        else:
+            d[attribute] = births
+            
+    return d
+
+# Column Indices: year,month,date_of_month,day_of_week,births
+cdc_year_births = calc_counts(final_list, 0)
+cdc_month_births = calc_counts(final_list, 1)
+cdc_dom_births = calc_counts(final_list, 2)
+cdc_dow_births = calc_counts(final_list, 3)    
