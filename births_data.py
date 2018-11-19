@@ -1,3 +1,25 @@
+csv_births = f.read()
+print(csv_births)
+csv_births.split('\n')[:11]
+
+def read_csv(file_name):
+    f = open(file_name, 'r')
+    csv_births = f.read()
+    split_data = csv_births.split('\n')
+    string_list = split_data[1:] # remove header row
+    final_list = []
+    string_fields = []
+    int_fields = []
+    
+    for each in string_list:
+        string_fields = each.split(',')
+        int_fields = [int(i) for i in string_fields]
+        final_list.append(int_fields)
+    return final_list
+
+final_list = read_csv('US_births_1994-2003_CDC_NCHS.csv')
+
+
 # List of List is in the format of:
 # year,month,date_of_month,day_of_week,births
 
@@ -20,27 +42,26 @@ def month_births(some_list):
 
 cdc_month_births = month_births(final_list)
 cdc_month_birthsf = open('US_births_1994-2003_CDC_NCHS.csv', 'r')
-csv_births = f.read()
-print(csv_births)
-csv_births.split('\n')[:11]
 
-def read_csv(file_name):
-    f = open(file_name, 'r')
-    csv_births = f.read()
-    split_data = csv_births.split('\n')
-    string_list = split_data[1:] # remove header row
-    final_list = []
-    string_fields = []
-    int_fields = []
     
-    for each in string_list:
-        string_fields = each.split(',')
-        int_fields = [int(i) for i in string_fields]
-        final_list.append(int_fields)
-    return final_list
+# year,month,date_of_month,day_of_week,births
+def dow_births(some_list):
+    
+    d = {} # create empty dictionary
+    
+    for each_item in some_list:
+        day_of_week = each_item[-2]
+        births = each_item[-1] # Grab births value
+        
+        if day_of_week in d:
+            d[day_of_week] += births
+        else:
+            d[day_of_week] = births
+    
+    
+    return d
 
-final_list = read_csv('US_births_1994-2003_CDC_NCHS.csv')
-    
-    
+cdc_day_births = dow_births(final_list)
+cdc_day_births
     
     
